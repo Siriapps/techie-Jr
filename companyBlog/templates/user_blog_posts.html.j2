@@ -1,0 +1,32 @@
+{% extends "base.html.j2" %}
+{% block content %}
+  <div class="container">
+    <div align='center' class="jumbotron">
+      <h1>{{user.username}}</h1>
+      <h5>{{user.email}}</h5>
+      <img align='center' src="{{profile_image}}" width="100px" height="100px">
+    </div>
+    {% for post in blog_posts.items %}
+      <a href="{{url_for('blog_posts.blog_post',blog_post_id = post.id)}}"><h2 style="color:black;">{{post.title}}</h2></a>
+      <h5>Written By: <span style="color:#800040;">{{post.author.username}}</span></h5>
+      <p class="text-muted">Published on: {{ post.date.strftime('%d-%m-%Y') }}</p>
+      <br>
+      <br>
+    {% endfor %}
+  </div>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center mt-2">
+      {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if blog_posts.page == page_num %}
+          <li class="page-item disabled">
+            <a class="page-link" href="{{url_for('users.user_posts',username=user.username,page = page_num)}}">{{ page_num}}</a>
+          </li>
+        {% else %}
+        <li class="page-item">
+          <a class="page-link" href="{{url_for('users.user_posts',username=user.username,page = page_num)}}">{{ page_num}}</a>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+{% endblock %}

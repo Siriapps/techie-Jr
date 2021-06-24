@@ -1,0 +1,47 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<style>
+    @media (min-width:800px) {
+        #smallScreenImg {
+            display: none;
+        }
+    }
+    @media (max-width:768px) {
+        #bigScreenImg {
+            display: none;
+        }
+        #smallScreenImg {
+            height: 200px;
+            width: 100px;
+            margin: auto auto;
+        }
+    }
+</style>
+<div class="container mt-3 text-center">
+      <h1 class="my-5" style="font-family: 'Arial Black'">ABOUT</h1>
+      <div class="card shadow p-3 mb-5 bg-white rounded my-3 mx-2">
+          <div class="card-body py-5 px-5">
+            <p class="card-text">
+              Techie Junior is a Publishing website to post all your research about various opportunities (especially for middle or high schoolers) you come across.
+              We believe that through our platform many aspiring Jr. Techies will get inspired and motivated by the stories of their peers.
+              Our motive is to help develop the early career of the young techies and create a brighter community for the future.
+            </p>
+          </div>
+      </div>
+      <h2 style="font-family: 'Arial Black'">ABOUT THE FOUNDER cum DEVELOPER</h2>
+      <div class="row my-5">
+          <div class="col-5" id="bigScreenImg">
+              <img src="static/myPic.png" alt="">
+          </div>
+          <div class="col-sm mt-3">
+              <div class="card shadow p-3 mb-5 bg-white rounded my-3 mx-2">
+                  <img class="card-img-top" id="smallScreenImg" src="static/myPic.png" alt="">
+                  <div class="card-body px-5 py-5">
+                    <h5 class="card-title" style="font-family:Calibri;font-weight:bold;">A.LAKSHMI SIRI</h5>
+                    <p class="card-text">“I am an autodidact and an Inquisitive high schooler who has always been passionate to do big in this technical world and be a part of the new advancements. I love to be a techie and am extremely motivated to constantly horn my skills and grow technically.”</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+{% endblock %}

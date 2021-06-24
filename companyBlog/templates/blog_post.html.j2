@@ -1,0 +1,93 @@
+{% extends "base.html.j2" %}
+{% block content %}
+  <div class="container">
+      <div class="jumbotron bg-white mt-3 w-85 mx-auto">
+      <h1>{{title}}</h1>
+        <h3 >Written by: <a href="{{url_for('users.user_posts',username = author)}}">
+          <span style="color:#800040;">{{author}}</span></a>
+        </h3>
+      <h6 class="text-muted">Published: {{date.strftime('%B %d, %Y')}}</h6>
+        {{ post|safe }}
+      {% if author == current_user.username or current_user.username == 'admin'%}
+        <div class="mt-4">
+          <a class="btn btn-dark text-warning" href="{{url_for('blog_posts.update',blog_post_id=b_id)}}">Update</a>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#del_modal">Delete</button>
+
+        </div>
+      {% endif %}
+    </div>
+    <div class="px-5 py-1 mx-auto">
+      <h5>Comments: </h5>
+      {% for message in comment %}
+        {% if message.commentUser %}
+          <div class="rounded p-3 px-3">
+                <p class="" style="font-family: Calibri; font-size:20px; font-weight:bold;">
+                  <img src="{{ url_for('static', filename='profile_pics/' + message.commentUser.profile_image) }}" alt="" width="35px" height="35px" class="rounded-circle my-1 mr-2" style="display:inline;">
+                  {{ message.commentUser.username }} -
+                  <p class="mx-1 my-1 px-2 py-2 col-9" style="font-size:18px">{{message.body}}</p>
+                  <hr class="col-5">
+                </p>
+          </div>
+        {% else %}
+            <div class="rounded p-3 px-3">
+                <p class="" style="font-family: Calibri; font-size:20px; font-weight:bold;">
+                  <img src="{{ url_for('static', filename='profile_pics/' + 'default.png') }}" alt="" width="35px" height="35px" class="rounded-circle my-1 mr-2" style="display:inline;">
+                  Anonymous -
+                  <p class="mx-1 my-1 px-2 py-2 col-9" style="font-size:18px">{{message.body}}</p>
+                  <hr class="col-5">
+                </p>
+            </div>
+        {% endif %}
+
+      {% endfor %}
+    </div>
+      <div class="bg-light p-3 rounded">
+        <form class="form-group" method="post">
+          {{form.hidden_tag()}}
+          <div class="row mb-3">
+            <h6>{{form.comment.label(class="form-control-label col-3")}}</h6>
+            {{form.comment(class="form-control form-control-lg col-7 mx-3")}}
+          </div>
+          <div class="row-1">
+            {{form.submit(class="btn btn-dark text-warning btn-light")}}
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+
+
+  <div class="modal" tabindex="-1" role="dialog" id="del_modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Blog Post</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this blog post?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+          <form action="{{ url_for('blog_posts.delete_post', blog_post_id=b_id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function(){
+      $("img").addClass("img-responsive");
+      $("img").css("max-width", "100%");
+    });
+    $('.note-video-clip').each(function(){
+            var tmp = jQuery(this).wrap('<p/>').parent().html();
+            jQuery(this).parent().html('<div class="embed-responsive embed-responsive-16by9">'+tmp+'</div>');
+    });
+  </script>
+
+{% endblock %}

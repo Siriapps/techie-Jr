@@ -1,0 +1,50 @@
+{% extends "base.html.j2" %}
+{% block content %}
+<style>
+    @media (max-width:767px) {
+        #regform {
+            width: 300px;
+        }
+    }
+    @media (min-width:800px) {
+        #regform {
+            width: 465px;
+        }
+    }
+</style>
+
+<div class="container">
+    <form method="POST" class="mx-auto my-2 px-4 py-4 shadow mb-5 bg-white rounded" id="regform">
+        {# This hidden_tag is a CSRF security feature. #}
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group row my-4">
+            <legend class="mb-4">Register</legend>
+            <div class="form-group row my-4">
+            <div class="col-sm-5 ">{{ form.email.label(class="col-form-label") }}<span style="color:red;">*</span></div> <div class="col-sm-7">{{ form.email(class="form-control") }}
+            {% for error in form.email.errors %}
+                <span style="color: red;">{{error}}</span>
+            {% endfor %}
+            </div>
+            <br>
+            </div>
+
+            <div class="form-group row my-4">
+            <div class="col-sm-5 ">{{ form.username.label(class="col-form-label") }}<span style="color:red;">*</span></div> <div class="col-sm-7">{{ form.username(class="form-control") }}
+            {% for error in form.username.errors %}
+                <span style="color: red;">{{error}}</span>
+            {% endfor %}
+            </div><br>
+            </div>
+
+            <div class="form-group row my-4">
+            <div class="col-sm-5 ">{{ form.password.label(class="col-form-label") }}<span style="color:red;">*</span></div> <div class="col-sm-7">{{ form.password(class="form-control") }}</div><br>
+            </div>
+
+            <div class="form-group row my-4">
+            <div class="col-sm-5 ">{{ form.pass_confirm.label(class="col-form-label") }}<span style="color:red;">*</span></div> <div class="col-sm-7">{{ form.pass_confirm(class="form-control") }}</div><br>
+            </div>
+        </fieldset>
+        {{ form.submit(class="btn btn-dark text-warning") }}
+    </form>
+</div>
+{% endblock %}
